@@ -2,46 +2,26 @@
 # Cmake
 ##############################################################################
 
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(ecl_mobile_robot)
 
 ##############################################################################
-# Catkin
+# Find Packages
 ##############################################################################
 
-find_package(catkin
-    REQUIRED
-    COMPONENTS
-        ecl_build 
-        ecl_errors
-        ecl_geometry
-        ecl_math
-        ecl_formatters
-        ecl_linear_algebra
-)
-    
-##############################################################################
-# Exports
-##############################################################################
-
-catkin_package(
-    INCLUDE_DIRS include
-    LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS
-        ecl_build
-        ecl_errors
-        ecl_geometry
-        ecl_math
-        ecl_formatters
-        ecl_linear_algebra
-        )
+find_package(ament_cmake_ros REQUIRED)
+find_package(ecl_build REQUIRED)
+find_package(ecl_errors REQUIRED)
+find_package(ecl_geometry REQUIRED)
+find_package(ecl_math REQUIRED)
+find_package(ecl_formatters REQUIRED)
+find_package(ecl_linear_algebra REQUIRED)
 
 ##############################################################################
 # Project Configuration
 ##############################################################################
 
-ecl_enable_cxx11_compiler()
-include_directories(include ${catkin_INCLUDE_DIRS})
+ecl_enable_cxx14_compiler()
 
 ##############################################################################
 # Sources
@@ -50,5 +30,16 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 add_subdirectory(include)
 add_subdirectory(src)
 
+##############################################################################
+# Exports
+##############################################################################
 
-
+ament_export_interfaces(${PROJECT_NAME})
+ament_export_dependencies(
+    ecl_errors
+    ecl_geometry
+    ecl_math
+    ecl_formatters
+    ecl_linear_algebra
+)
+ament_package()
